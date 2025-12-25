@@ -1,5 +1,6 @@
 ## Table Of Contents
   - [Notations And Terminology](#notations-and-terminology)
+  - [Purpose of the Work](#purpose-of-the-work)
 
 ## Notations And Terminology
 
@@ -41,3 +42,14 @@ This specification defines the following terms:
 - *Rule*: atomic check. For example, constraint on `:latest` tag.
 
 - *Violation*: the fact of violation of the rule by the object.
+
+## Purpose of the Work
+
+The main idea of this project is to develop a Kubernetes Controller thath observes Kubernetes Objects
+and checks them for Drift & Conformance Rules with defined rules. It publishes the results as 
+CRD reports, Events, Conditions and metrics.
+
+The project can be used in Kubernetes clusters for:
+
+- quality control of manifests/deployments
+- detecting configurations anti-patterns
