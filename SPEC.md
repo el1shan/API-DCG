@@ -2,6 +2,7 @@
   - [Notations and Terminology](#notations-and-terminology)
   - [Purpose of the Work](#purpose-of-the-work)
   - [Architecture and Components](#architecture-and-components)
+  - [API Specification](#api-specification)
 
 ## Notations And Terminology
 
@@ -76,3 +77,58 @@ The project consists of several key components:
 
 **TODO: add picture**
 
+## API Specification
+
+1. *DriftPolicy*
+   
+   There is namespaced resource. Expected fields are:
+   
+   - `spec.target`
+     - `apiGroups` (required): List of Kubernetes API groups to match target resources
+     - `kinds` (required): List of Kubernetes resource kinds to be evaluated
+     - `namespaces` (optional): List of namespaces to which the policy applies
+     - `labelSelector` (optional): Standart Kubernetes `LabelSelector` to filter target resources
+   
+   - `spec.rules[]`
+     - `name` (required): Name of the rule to apply
+     - `enabled` (required, default: `true`): Enables or disables the rule
+     - `params` (optional): Configuration parameters
+
+   - `spec.report`
+     - `mode` (required): Report generation mode. Supported value: PerObject
+     - `ttlSecondsAfterFinished` (optional): Time-to-live for completed reports, enforced by the controller
+    
+   - `spec.status`
+     - `conditions`: Current status of the policy
+     - `observedGeneration`: Most recent generation observed by the controller
+     - `lastScanTime`: Timestamp of the last completed scan
+     - `stats`: Aggregated statistics for the policy. Consist of `targetObjectsScanned` and `violationsTotal`
+    
+2. *DriftReport*
+
+   One *DriftReport* corresponds to a single checked object. Expected fields are:
+
+   - `spec.policyRef`
+     - `name` (required): Name of the policy
+  
+   - `spec.subject`
+     - `apiVersion` (required): API version of the evaluated Kubernetes object
+     - `kind` (required): Kind of the evaluated Kubernetes object
+     - `name` (required): Name of the evaluated Kubernetes object
+     - `namespace` (required): Namespace of the evaluated Kubernetes object
+    
+   - `status.summary`
+     - `violations`: number of detected rule violations
+     - `passed`: number of rules that passed without violations
+    
+   - `status.violations[]`
+     - `rule`: Name of the rule that was violated
+     - `severity`: Severity level of the violation. Supported values: `low`, `medium`, `high`
+     - `message`: Human-readable description of the violation
+     - `fieldPath`: JSON field path within the subject object related to the violation
+     - `docURL`: Reference URL to the rule documentation
+     - `detectedAt`: Timestamp when the violation was detected
+    
+   - `status.conditions[]`
+     - `Ready`: `True` if the report reflects the current evaluated state of the subject
+     - `Stale`: `True` if the subject object is deleted or no longer accessible
