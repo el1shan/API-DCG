@@ -1,6 +1,7 @@
 ## Table Of Contents
-  - [Notations And Terminology](#notations-and-terminology)
+  - [Notations and Terminology](#notations-and-terminology)
   - [Purpose of the Work](#purpose-of-the-work)
+  - [Architecture and Components](#architecture-and-components)
 
 ## Notations And Terminology
 
@@ -53,3 +54,25 @@ The project can be used in Kubernetes clusters for:
 
 - quality control of manifests/deployments
 - detecting configurations anti-patterns
+
+## Architecture and Components
+
+### Components
+
+The project consists of several key components:
+
+- *Controller*: responsible for generating and updating *DriftReport*, publishing *Conditions* and *Events*, 
+  exporting metrics to Prometheus and implementing *Reconcile Loop* for *DriftPolicy* or target resources
+
+- *CRD Resources*: defines *DriftPolicy* and *DriftReport*
+
+- *Metrics Endpoint*: provides a `/metrics` endpoint for Prometheus scrapping
+
+- *Tests*: includes unit, integration and end-to-end (e2e) tests
+
+- *CI*: contains continuous integration pipelines for automated testing and validation
+
+### Architecture
+
+**TODO: add picture**
+
