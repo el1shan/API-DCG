@@ -9,19 +9,14 @@ jobs:
     name: Run on Ubuntu
     runs-on: [self-hosted, Linux, X64]
     steps:
-      - name: Clone the code
-        uses: actions/checkout@v4
-        with:
-          clean: false
-
-      - name: Clean the repo
+      - name: Set right permissions
         shell: bash
         run: |
           set -eou pipefail
-          chmod -R u+rwX "$GITHUB_WORKSPACE" || true
-          
-          git reset --hard
-          git clean -ffdx
+          chmod -R u+rwX "$GITHUB_WORKSPACE" || true          
+
+      - name: Clone the code
+        uses: actions/checkout@v4
 
       - name: Setup Go
         uses: actions/setup-go@v5
