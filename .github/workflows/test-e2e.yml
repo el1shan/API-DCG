@@ -11,6 +11,17 @@ jobs:
     steps:
       - name: Clone the code
         uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Clean the repo
+        shell: bash
+        run: |
+          set -eou pipefail
+          chmod -R u+rwX "$GITHUB_WORKSPACE" || true
+          
+          git reset --hard
+          git clean -ffdx
 
       - name: Setup Go
         uses: actions/setup-go@v5
