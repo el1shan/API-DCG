@@ -1,0 +1,9 @@
+apiVersion: driftguard.api.dcg/v1alpha1
+kind: DriftPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: api-dcg
+    app.kubernetes.io/managed-by: kustomize
+  name: driftpolicy-sample
+spec:
+  # TODO(user): Add fields here

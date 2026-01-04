@@ -8,4 +8,23 @@ layout:
 - go.kubebuilder.io/v4
 projectName: api-dcg
 repo: github.com/el1shan/API-DCG
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: api.dcg
+  group: driftguard
+  kind: DriftPolicy
+  path: github.com/el1shan/API-DCG/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: api.dcg
+  group: driftguard
+  kind: DriftReport
+  path: github.com/el1shan/API-DCG/api/v1alpha1
+  version: v1alpha1
 version: "3"

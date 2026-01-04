@@ -1,0 +1,9 @@
+apiVersion: driftguard.api.dcg/v1alpha1
+kind: DriftReport
+metadata:
+  labels:
+    app.kubernetes.io/name: api-dcg
+    app.kubernetes.io/managed-by: kustomize
+  name: driftreport-sample
+spec:
+  # TODO(user): Add fields here
